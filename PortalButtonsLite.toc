@@ -1,0 +1,19 @@
+## Interface: 25001
+## Interface-Classic: 11307
+## Interface-BCC: 20501
+## Author: Pampula (Mirage Raceway) (BCClassic)
+## Title: Portal Buttons Lite
+## Version: @project-version@
+## Notes: An addon where you have custom row of buttons to hold teleport/portal spells.
+## RequiredDeps:
+## SavedVariables: PortalButtonsLiteDB
+
+#@no-lib-strip@
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+#@end-no-lib-strip@
+
+Core.lua
