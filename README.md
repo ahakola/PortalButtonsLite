@@ -14,4 +14,6 @@ BTW. this was all done and tested under 24h so forgive me if something isn't wor
 
 ![Skinned Buttons with Tooltip and Portal Spell not known yet](/Images/PortalButtonsLite-SkinnedButtons-Tooltip-PortalSpellNotKnown.png?raw=true "Skinned Buttons with Tooltip and Portal Spell not known yet")
 
+![Options under Interface -> Addons -> Portal Buttons Lite](/Images/PortalButtonsLite-Options.png?raw=true "Options under Interface -> Addons -> Portal Buttons Lite")
+
 ---
