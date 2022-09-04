@@ -48,7 +48,8 @@ local defaults = {
 			Darnassus = true, 
 			Exodar = true,
 			Theramore = true,
-			Shattrath = true
+			Shattrath = true,
+			Dalaran = true
 		},
 		Horde = {
 			Orgrimmar = true,
@@ -56,7 +57,8 @@ local defaults = {
 			["Thunder Bluff"] = true,
 			Silvermoon = true,
 			Stonard = true,
-			Shattrath = true
+			Shattrath = true,
+			Dalaran = true
 		}
 	}
 }
@@ -68,7 +70,8 @@ local data = {
 			11419, -- Darnassus
 			32266, -- Exodar
 			49360, -- Theramore
-			33691 -- Shattrath
+			33691, -- Shattrath
+			53142 -- Dalaran
 		},
 		Teleports = {
 			3561, -- Stormwind
@@ -76,7 +79,8 @@ local data = {
 			3565, -- Darnassus
 			32271, -- Exodar
 			49359, -- Theramore
-			33690 -- Shattrath
+			33690, -- Shattrath
+			53140 -- Dalaran
 		},
 		Names = {
 			"Stormwind",
@@ -84,7 +88,8 @@ local data = {
 			"Darnassus",
 			"Exodar",
 			"Theramore",
-			"Shattrath"
+			"Shattrath",
+			"Dalaran"
 		}
 	},
 	Horde = {
@@ -94,7 +99,8 @@ local data = {
 			11420, -- Thunder Bluff
 			32267, -- Silvermoon
 			49361, -- Stonard
-			35717 -- Shattrath
+			35717, -- Shattrath
+			53142 -- Dalaran
 		},
 		Teleports = {
 			3567, -- Orgrimmar
@@ -102,7 +108,8 @@ local data = {
 			3566, -- Thunder Bluff
 			32272, -- Silvermoon
 			49358, -- Stonard
-			35715 -- Shattrath
+			35715, -- Shattrath
+			53140 -- Dalaran
 		},
 		Names = {
 			"Orgrimmar",
@@ -110,7 +117,8 @@ local data = {
 			"Thunder Bluff",
 			"Silvermoon",
 			"Stonard",
-			"Shattrath"
+			"Shattrath",
+			"Dalaran"
 		}
 	}
 }
@@ -120,6 +128,8 @@ if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then -- 2
 	numMaxPortals = 5
 elseif WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then -- 5
 	numMaxPortals = 6
+elseif WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC then -- 11
+	numMaxPortals = 7
 end
 
 local f = CreateFrame("Frame", "PortalButtonsLiteFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
