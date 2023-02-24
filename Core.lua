@@ -264,7 +264,8 @@ f:SetScript("OnEvent", function(self, event, ...)
 			btn:SetAttribute("type", "spell")
 			btn:SetAttribute("spell1", teleportSpellName)
 			btn:SetAttribute("spell2", portalSpellName)
-			btn:SetNormalTexture(nil) -- Strip surrounding bordertexture
+			btn:SetNormalTexture(130871) -- Strip surrounding bordertexture - 130871 = Interface/Buttons/WHITE8X8
+			btn:GetNormalTexture():SetVertexColor(1, 1, 1, 0) -- Fix for Wrath Classic since it uses new DF style which can't handle :SetNormalTexture(nil)
 			btn.icon:SetTexture(teleportIcon) -- Set Icon
 			btn:SetScript("OnEnter", function(this)
 				local colorCode = (not showButtons.Teleports[i]) and "|cffff0000" or "|cffffffff"
@@ -294,7 +295,8 @@ f:SetScript("OnEvent", function(self, event, ...)
 		end
 
 		self:RegisterEvent("LEARNED_SPELL_IN_TAB")
-		self:RegisterEvent("BAG_UPDATE")
+		--self:RegisterEvent("BAG_UPDATE")
+		self:RegisterEvent("BAG_UPDATE_DELAYED")
 
 	elseif event == "LEARNED_SPELL_IN_TAB" then
 		local spellId, skillInfoIndex, isGuildPerkSpell = ...
@@ -307,7 +309,8 @@ f:SetScript("OnEvent", function(self, event, ...)
 			end
 		end
 
-	elseif event == "BAG_UPDATE" then
+	--elseif event == "BAG_UPDATE" then
+	elseif event == "BAG_UPDATE_DELAYED" then
 		--Debug("PortalButtonsLite: BAG_UPDATE")
 		_updateReagentCount()
 
