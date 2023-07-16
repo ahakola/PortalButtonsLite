@@ -1,7 +1,7 @@
-## Interface: 30401
+## Interface: 30402
 ## Interface-Classic: 11403
 ## Interface-BCC: 20504
-## Interface-Wrath: 30401
+## Interface-Wrath: 30402
 ## Author: Pampula (Mirage Raceway) (BCClassic)
 ## Title: Portal Buttons Lite
 ## Version: @project-version@
