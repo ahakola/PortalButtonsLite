@@ -71,7 +71,8 @@ local data = {
 			32266, -- Exodar
 			49360, -- Theramore
 			33691, -- Shattrath
-			53142 -- Dalaran
+			53142, -- Dalaran
+			88345 -- Tol Barad
 		},
 		Teleports = {
 			3561, -- Stormwind
@@ -80,7 +81,8 @@ local data = {
 			32271, -- Exodar
 			49359, -- Theramore
 			33690, -- Shattrath
-			53140 -- Dalaran
+			53140, -- Dalaran
+			88342 -- Tol Barad
 		},
 		Names = {
 			"Stormwind",
@@ -89,7 +91,8 @@ local data = {
 			"Exodar",
 			"Theramore",
 			"Shattrath",
-			"Dalaran"
+			"Dalaran",
+			"Tol Barad"
 		}
 	},
 	Horde = {
@@ -100,7 +103,8 @@ local data = {
 			32267, -- Silvermoon
 			49361, -- Stonard
 			35717, -- Shattrath
-			53142 -- Dalaran
+			53142, -- Dalaran
+			88346-- Tol Barad
 		},
 		Teleports = {
 			3567, -- Orgrimmar
@@ -109,7 +113,8 @@ local data = {
 			32272, -- Silvermoon
 			49358, -- Stonard
 			35715, -- Shattrath
-			53140 -- Dalaran
+			53140, -- Dalaran
+			88344-- Tol Barad
 		},
 		Names = {
 			"Orgrimmar",
@@ -118,7 +123,8 @@ local data = {
 			"Silvermoon",
 			"Stonard",
 			"Shattrath",
-			"Dalaran"
+			"Dalaran",
+			"Tol Barad"
 		}
 	}
 }
@@ -130,6 +136,8 @@ elseif WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then -- 5
 	numMaxPortals = 6
 elseif WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC then -- 11
 	numMaxPortals = 7
+elseif WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then -- 14
+	numMaxPortals = 8
 end
 
 local f = CreateFrame("Frame", "PortalButtonsLiteFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
