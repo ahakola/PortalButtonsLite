@@ -1,4 +1,4 @@
-## Interface: 11507, 20504, 30403, 40402
+## Interface: 11507, 20504, 30403, 40402, 50500
 ## Author: Pampula (Mirage Raceway) (BCClassic)
 ## Title: Portal Buttons Lite
 ## Version: @project-version@

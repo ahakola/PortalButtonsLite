@@ -49,7 +49,9 @@ local defaults = {
 			Exodar = true,
 			Theramore = true,
 			Shattrath = true,
-			Dalaran = true
+			Dalaran = true,
+			["Tol Barad"] = true,
+			["Vale of Eternal Blossoms"] = true
 		},
 		Horde = {
 			Orgrimmar = true,
@@ -58,7 +60,9 @@ local defaults = {
 			Silvermoon = true,
 			Stonard = true,
 			Shattrath = true,
-			Dalaran = true
+			Dalaran = true,
+			["Tol Barad"] = true,
+			["Vale of Eternal Blossoms"] = true
 		}
 	}
 }
@@ -72,7 +76,18 @@ local data = {
 			49360, -- Theramore
 			33691, -- Shattrath
 			53142, -- Dalaran
-			88345 -- Tol Barad
+			88345, -- Tol Barad
+			132620 -- Vale of Eternal Blossoms
+
+			--[[
+			176246, -- Stormshield
+			, -- Hall of the Guardian
+			, -- Dalaran - Broken Isles
+			281400, -- Boralus
+			344597, -- Oribos
+			395289, -- Valdrakken
+			446534, -- Dornogal
+			]]--
 		},
 		Teleports = {
 			3561, -- Stormwind
@@ -82,7 +97,18 @@ local data = {
 			49359, -- Theramore
 			33690, -- Shattrath
 			53140, -- Dalaran
-			88342 -- Tol Barad
+			88342, -- Tol Barad
+			132621 -- Vale of Eternal Blossoms
+
+			--[[
+			176248, -- Stormshield
+			193759, -- Hall of the Guardian
+			224869, -- Dalaran - Broken Isles
+			281403, -- Boralus
+			344587, -- Oribos
+			395277, -- Valdrakken
+			446540, -- Dornogal
+			]]--
 		},
 		Names = {
 			"Stormwind",
@@ -90,9 +116,20 @@ local data = {
 			"Darnassus",
 			"Exodar",
 			"Theramore",
-			"Shattrath",
-			"Dalaran",
-			"Tol Barad"
+			"Shattrath", -- TBC
+			"Dalaran", -- Wrath
+			"Tol Barad", -- Cata
+			"Vale of Eternal Blossoms" -- MoP
+
+			--[[
+			"Stormshield" -- WoD
+			"Hall of the Guardian" -- Legion
+			"Dalaran - Broken Isles" -- Legion
+			"Boralus" -- BfA
+			"Oribos" -- SL
+			"Valdrakken" -- DF
+			"Dornogal" -- TWW
+			]]--
 		}
 	},
 	Horde = {
@@ -104,7 +141,18 @@ local data = {
 			49361, -- Stonard
 			35717, -- Shattrath
 			53142, -- Dalaran
-			88346-- Tol Barad
+			88346, -- Tol Barad
+			132626 -- Vale of Eternal Blossoms
+
+			--[[
+			176244, -- Warspear
+			, -- Hall of the Guardian
+			, -- Dalaran - Broken Isles
+			281402, -- Dazar'alor
+			344587, -- Oribos
+			395277, -- Valdrakken
+			446540, -- Dornogal
+			]]--
 		},
 		Teleports = {
 			3567, -- Orgrimmar
@@ -114,7 +162,18 @@ local data = {
 			49358, -- Stonard
 			35715, -- Shattrath
 			53140, -- Dalaran
-			88344-- Tol Barad
+			88344, -- Tol Barad
+			132627 -- Vale of Eternal Blossoms
+
+			--[[
+			176242, -- Warspear
+			193759, -- Hall of the Guardian
+			224869, -- Dalaran - Broken Isles
+			281404, -- Dazar'alor
+			344587, -- Oribos
+			395277, -- Valdrakken
+			446540, -- Dornogal
+			]]--
 		},
 		Names = {
 			"Orgrimmar",
@@ -122,9 +181,20 @@ local data = {
 			"Thunder Bluff",
 			"Silvermoon",
 			"Stonard",
-			"Shattrath",
-			"Dalaran",
-			"Tol Barad"
+			"Shattrath", -- TBC
+			"Dalaran", -- Wrath
+			"Tol Barad", -- Cata
+			"Vale of Eternal Blossoms" -- MoP
+
+			--[[
+			"Warspear" -- WoD
+			"Hall of the Guardian" -- Legion
+			"Dalaran - Broken Isles" -- Legion
+			"Dazar'alor" -- BfA
+			"Oribos" -- SL
+			"Valdrakken" -- DF
+			"Dornogal" -- TWW
+			]]--
 		}
 	}
 }
@@ -138,6 +208,8 @@ elseif WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC then -- 11
 	numMaxPortals = 7
 elseif WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then -- 14
 	numMaxPortals = 8
+elseif WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC then -- 19
+	numMaxPortals = 9
 end
 
 local f = CreateFrame("Frame", "PortalButtonsLiteFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
