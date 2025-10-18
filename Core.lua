@@ -4,6 +4,9 @@
 	My implementation of an addon where you have custom row of buttons to hold teleport/portal spells.
 	BTW. this was all done and tested under 24h so forgive me if something isn't working as expected.
 
+	Starting with MoP (Classic), you no longer need reagents for teleport or portal spells, so the
+	reagent counter and related settings are automatically disabled in MoP Classic and later versions.
+
 	By Pampula of Mirage Raceway EU (BCClassic)
 ]]--
 local ADDON_NAME, ns = ...
@@ -273,6 +276,13 @@ local function _updateButtons()
 end
 
 local function _updateReagentCount()
+	if db.hideRunes or numMaxPortals >= 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
+		f.runeCountString:Hide()
+		return
+	else
+		f.runeCountString:Show()
+	end
+
 	RoTCount = GetItemCount(17031) or 0 -- 17031 - Rune of Teleportation
 	RoPCount = GetItemCount(17032) or 0 -- 17032 - Rune of Portals
 
@@ -291,12 +301,6 @@ local function _updateReagentCount()
 	}
 	f.runeCountString:ClearAllPoints()
 	f.runeCountString:SetPoint(pointTable[db.runesPosition], f, db.runesPosition, 0, 0)
-
-	if db.hideRunes then
-		f.runeCountString:Hide()
-	else
-		f.runeCountString:Show()
-	end
 end
 
 local function _skinButtons()
@@ -501,12 +505,14 @@ local options = {
 			order = 200,
 			type = "header",
 			name = "Rune Counter",
+			hidden = numMaxPortals >= 9, -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		},
 		hideRunes = {
 			order = 210,
 			type = "toggle",
 			name = "Hide Rune Counter",
 			desc = "Hide the Rune Counter -text.",
+			hidden = numMaxPortals >= 9, -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		},
 		runesPosition = {
 			order = 220,
@@ -523,12 +529,14 @@ local options = {
 				["TOPLEFT"] = "Top Left",
 				["TOPRIGHT"] = "Top Right",
 			},
+			hidden = numMaxPortals >= 9, -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		},
 		runesLineBreak = {
 			order = 230,
 			type = "toggle",
 			name = "Double Line Rune Counter",
 			desc = "Break Rune Counter -text into two lines of text instead of single line.",
+			hidden = numMaxPortals >= 9, -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		},
 		portalsHeader = {
 			order = 300,

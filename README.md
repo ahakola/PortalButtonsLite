@@ -6,6 +6,8 @@ My implementation of an addon where you have custom row of buttons to hold telep
 
 BTW. this was all done and tested under 24h so forgive me if something isn't working as expected.
 
+Starting with MoP (Classic), you no longer need reagents for teleport or portal spells, so the reagent counter and related settings are automatically disabled in MoP Classic and later versions.
+
 ---
 
 ![Buttons](/Images/PortalButtonsLite-Buttons.png?raw=true "Buttons")
