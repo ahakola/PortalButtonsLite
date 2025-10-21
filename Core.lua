@@ -55,7 +55,17 @@ local defaults = {
 			Shattrath = true,
 			Dalaran = true,
 			["Tol Barad"] = true,
-			["Vale of Eternal Blossoms"] = true
+			["Vale of Eternal Blossoms"] = true,
+			-- YOU ARE HERE --
+			--[[
+			Stormshield = true, -- WoD
+			["Hall of the Guardian"] = true, -- Legion
+			["Dalaran - Broken Isles"] = true, -- Legion
+			Boralus = true, -- BfA
+			Oribos = true, -- SL
+			Valdrakken = true, -- DF
+			Dornogal = true -- TWW
+			]]--
 		},
 		Horde = {
 			Orgrimmar = true,
@@ -66,7 +76,17 @@ local defaults = {
 			Shattrath = true,
 			Dalaran = true,
 			["Tol Barad"] = true,
-			["Vale of Eternal Blossoms"] = true
+			["Vale of Eternal Blossoms"] = true,
+			-- YOU ARE HERE --
+			--[[
+			Warspear = true, -- WoD
+			["Hall of the Guardian"] = true, -- Legion
+			["Dalaran - Broken Isles"] = true, -- Legion
+			["Dazar'alor"] = true, -- BfA
+			Oribos = true, -- SL
+			Valdrakken = true, -- DF
+			Dornogal = true -- TWW
+			]]--
 		}
 	}
 }
@@ -79,18 +99,18 @@ local data = {
 			32266, -- Exodar
 			49360, -- Theramore
 			33691, -- Shattrath
-			53142, -- Dalaran
+			53142, -- Dalaran - Northrend
 			88345, -- Tol Barad
-			132620 -- Vale of Eternal Blossoms
-
+			132620, -- Vale of Eternal Blossoms
+			-- YOU ARE HERE --
 			--[[
 			176246, -- Stormshield
-			, -- Hall of the Guardian
-			, -- Dalaran - Broken Isles
+			0,-- Hall of the Guardian (there is no Portal!)
+			224871, -- Dalaran - Broken Isles
 			281400, -- Boralus
 			344597, -- Oribos
-			395289, -- Valdrakken
-			446534, -- Dornogal
+			395289, -- Valdrakken -- CHECK ID
+			446534 -- Dornogal -- CHECK ID
 			]]--
 		},
 		Teleports = {
@@ -100,18 +120,18 @@ local data = {
 			32271, -- Exodar
 			49359, -- Theramore
 			33690, -- Shattrath
-			53140, -- Dalaran
+			53140, -- Dalaran - Northrend
 			88342, -- Tol Barad
-			132621 -- Vale of Eternal Blossoms
-
+			132621, -- Vale of Eternal Blossoms
+			-- YOU ARE HERE --
 			--[[
 			176248, -- Stormshield
-			193759, -- Hall of the Guardian
+			193759, -- Hall of the Guardian -- CHECK ID
 			224869, -- Dalaran - Broken Isles
 			281403, -- Boralus
 			344587, -- Oribos
-			395277, -- Valdrakken
-			446540, -- Dornogal
+			395277, -- Valdrakken -- CHECK ID
+			446540 -- Dornogal -- CHECK ID
 			]]--
 		},
 		Names = {
@@ -123,15 +143,15 @@ local data = {
 			"Shattrath", -- TBC
 			"Dalaran", -- Wrath
 			"Tol Barad", -- Cata
-			"Vale of Eternal Blossoms" -- MoP
-
+			"Vale of Eternal Blossoms", -- MoP
+			-- YOU ARE HERE --
 			--[[
-			"Stormshield" -- WoD
-			"Hall of the Guardian" -- Legion
-			"Dalaran - Broken Isles" -- Legion
-			"Boralus" -- BfA
-			"Oribos" -- SL
-			"Valdrakken" -- DF
+			"Stormshield", -- WoD
+			"Hall of the Guardian", -- Legion
+			"Dalaran - Broken Isles", -- Legion
+			"Boralus", -- BfA
+			"Oribos", -- SL
+			"Valdrakken", -- DF
 			"Dornogal" -- TWW
 			]]--
 		}
@@ -144,18 +164,18 @@ local data = {
 			32267, -- Silvermoon
 			49361, -- Stonard
 			35717, -- Shattrath
-			53142, -- Dalaran
+			53142, -- Dalaran - Northrend
 			88346, -- Tol Barad
-			132626 -- Vale of Eternal Blossoms
-
+			132626, -- Vale of Eternal Blossoms
+			-- YOU ARE HERE --
 			--[[
 			176244, -- Warspear
-			, -- Hall of the Guardian
-			, -- Dalaran - Broken Isles
+			0, -- Hall of the Guardian (there is no Portal!)
+			224871, -- Dalaran - Broken Isles
 			281402, -- Dazar'alor
-			344587, -- Oribos
-			395277, -- Valdrakken
-			446540, -- Dornogal
+			344597, -- Oribos
+			395277, -- Valdrakken -- CHECK ID
+			446540, -- Dornogal -- CHECK ID
 			]]--
 		},
 		Teleports = {
@@ -165,18 +185,18 @@ local data = {
 			32272, -- Silvermoon
 			49358, -- Stonard
 			35715, -- Shattrath
-			53140, -- Dalaran
+			53140, -- Dalaran - Northrend
 			88344, -- Tol Barad
-			132627 -- Vale of Eternal Blossoms
-
+			132627, -- Vale of Eternal Blossoms
+			-- YOU ARE HERE --
 			--[[
 			176242, -- Warspear
-			193759, -- Hall of the Guardian
+			193759, -- Hall of the Guardian -- CHECK ID
 			224869, -- Dalaran - Broken Isles
 			281404, -- Dazar'alor
 			344587, -- Oribos
-			395277, -- Valdrakken
-			446540, -- Dornogal
+			395277, -- Valdrakken -- CHECK ID
+			446540, -- Dornogal -- CHECK ID
 			]]--
 		},
 		Names = {
@@ -188,16 +208,16 @@ local data = {
 			"Shattrath", -- TBC
 			"Dalaran", -- Wrath
 			"Tol Barad", -- Cata
-			"Vale of Eternal Blossoms" -- MoP
-
+			"Vale of Eternal Blossoms", -- MoP
+			-- YOU ARE HERE --
 			--[[
-			"Warspear" -- WoD
-			"Hall of the Guardian" -- Legion
-			"Dalaran - Broken Isles" -- Legion
-			"Dazar'alor" -- BfA
-			"Oribos" -- SL
-			"Valdrakken" -- DF
-			"Dornogal" -- TWW
+			"Warspear", -- WoD
+			"Hall of the Guardian", -- Legion
+			"Dalaran - Broken Isles", -- Legion
+			"Dazar'alor", -- BfA
+			"Oribos", -- SL
+			"Valdrakken", -- DF
+			"Dornogal", -- TWW
 			]]--
 		}
 	}
