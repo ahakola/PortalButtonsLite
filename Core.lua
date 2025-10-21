@@ -308,10 +308,11 @@ local function _updateButtons()
 			f:SetSize(numRows * db.buttonSize + (numRows - 1) * math.abs(db.buttonGap), db.buttonRowMaxCount * db.buttonSize + (db.buttonRowMaxCount - 1) * math.abs(db.buttonGap))
 		end
 	end
+	f.numButtons = numButtons -- Don't show ReagentCount on low level characters before they know any Teleport-spells
 end
 
 local function _updateReagentCount()
-	if db.hideRunes or numMaxPortals >= 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
+	if db.hideRunes or f.numButtons == 0 or numMaxPortals >= 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		f.runeCountString:Hide()
 		return
 	else
