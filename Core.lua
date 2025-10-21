@@ -376,8 +376,23 @@ local function _skinButtons()
 	end
 end
 
+local function _checkForNewSpell(spellId)
+	local spellName = C_Spell.GetSpellName(spellId)
+	if string.find(spellName, "Teleport: ") or string.find(spellName, "Portal: ") then -- Check if it is a Teleport or Portal spell
+		for i = 1, numMaxPortals do
+			if data[playerFaction].Teleports[i] == spellId or data[playerFaction].Portals[i] == spellId then -- Check if the spell is already in the list
+				--break
+				return
+			end
+		end
+
+		Print("New spell:", spellId, spellName)
+	end
+end
+
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, ...)
+	--Debug("OnEvent:", event, ...)
 	if event == "ADDON_LOADED" and (...) == ADDON_NAME then
 		PortalButtonsLiteDB = PortalButtonsLiteDB or {}
 		local Settings = LibStub("AceDB-3.0"):New(PortalButtonsLiteDB, defaults, true)
@@ -435,16 +450,18 @@ f:SetScript("OnEvent", function(self, event, ...)
 			_skinButtons()
 		end
 
-		self:RegisterEvent("LEARNED_SPELL_IN_TAB")
-		--self:RegisterEvent("BAG_UPDATE")
+		self:RegisterEvent("LEARNED_SPELL_IN_TAB") -- Classic
+		--self:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE") -- TWW-> (Retail, might come to Classic later?)
 		if numMaxPortals < 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 			--self:RegisterEvent("BAG_UPDATE")
 			self:RegisterEvent("BAG_UPDATE_DELAYED")
 		end
+		if IsPublicTestClient and IsPublicTestClient() then
+			self:RegisterEvent("UNIT_SPELLCAST_START")
+		end
 
-	elseif event == "LEARNED_SPELL_IN_TAB" then
+	elseif event == "LEARNED_SPELL_IN_TAB" or event == "LEARNED_SPELL_IN_SKILL_LINE" then
 		local spellId, skillInfoIndex, isGuildPerkSpell = ...
-		--Debug("PortalButtonsLite: LEARNED_SPELL_IN_TAB", spellId)
 
 		for i = 1, numMaxPortals do
 			if data[playerFaction].Teleports[i] == spellId or data[playerFaction].Portals[i] == spellId then
@@ -452,12 +469,19 @@ f:SetScript("OnEvent", function(self, event, ...)
 				break
 			end
 		end
+		
+		if IsPublicTestClient and IsPublicTestClient() then -- PTR
+			_checkForNewSpell(spellId)
+		end
 
 	--elseif event == "BAG_UPDATE" then
 	elseif event == "BAG_UPDATE_DELAYED" then
-		--Debug("PortalButtonsLite: BAG_UPDATE")
 		_updateReagentCount()
 
+	elseif event == "UNIT_SPELLCAST_START" then -- PTR
+		local unitTarget, castGUID, spellId = ...
+
+		_checkForNewSpell(spellId)
 	end
 end)
 
