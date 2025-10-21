@@ -38,7 +38,8 @@ local iconRMB = "|TInterface\\HELPFRAME\\NewPlayerExperienceParts:26:18:0:0:1024
 local defaults = {
 	profile = {
 		buttonSize = 32,
-		buttonGap = 3,
+		buttonGap = 3, -- Set negative for reverse order
+		buttonRowMaxCount = 5, -- Max number of buttons before new row/column
 		layoutOrientation = true, -- true = Horizontal, false = Vertical
 		skinElvUI = false,
 		hideRunes = false,
@@ -240,38 +241,72 @@ f.runeCountString = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall") --
 f.runeCountString:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, 0)
 
 local function _updateButtons()
-	local resizeCount, lastShown = 0, 0
+	local numButtons, numRows, lastShown, lastRowStart = 0, 0, 0, 0
+
+	local defaultButtonOrder = (db.buttonGap >= 0)
+	local offsetSign, horizontalPoint, verticalPoint = 1, "LEFT", "BOTTOM"
+	if not defaultButtonOrder then
+		offsetSign, horizontalPoint, verticalPoint = -1, "RIGHT", "TOP"
+	end
+	local pointTable = { BOTTOM = "TOP", LEFT = "RIGHT", RIGHT = "LEFT", TOP = "BOTTOM" }
+
 	for i = 1, numMaxPortals do
 		f["Button" .. i]:SetSize(db.buttonSize, db.buttonSize)
 
 		local showThisButton = db[playerFaction][data[playerFaction].Names[i]]
-		showButtons.Teleports[i] = IsSpellKnown(data[playerFaction].Teleports[i])
-		showButtons.Portals[i] = IsSpellKnown(data[playerFaction].Portals[i])
+		showButtons.Teleports[i] = C_SpellBook.IsSpellInSpellBook(data[playerFaction].Teleports[i]) -- previously IsSpellKnown
+		showButtons.Portals[i] = C_SpellBook.IsSpellInSpellBook(data[playerFaction].Portals[i]) -- previously IsSpellKnown
 
 		if showThisButton and (showButtons.Teleports[i] or showButtons.Portals[i]) then
 			showButtons[i] = true
 			f["Button" .. i]:Show()
 			f["Button" .. i]:ClearAllPoints()
 			if lastShown == 0 then
-				f["Button" .. i]:SetPoint("TOPLEFT", f, "TOPLEFT", 0, 0)
+				if db.layoutOrientation then
+					f["Button" .. i]:SetPoint(("TOP" .. horizontalPoint), f, ("TOP" .. horizontalPoint), 0, 0)
+				else
+					f["Button" .. i]:SetPoint((verticalPoint .. "LEFT"), f, (verticalPoint .. "LEFT"), 0, 0)
+				end
+				numRows = 1
+				lastRowStart = i
 			else
 				if db.layoutOrientation then
-					f["Button" .. i]:SetPoint("LEFT", f["Button" .. lastShown], "RIGHT", db.buttonGap, 0)
+					if numButtons % db.buttonRowMaxCount == 0 then
+						f["Button" .. i]:SetPoint("TOP", f["Button" .. lastRowStart], "BOTTOM", 0, (offsetSign * -db.buttonGap))
+						numRows = numRows + 1
+						lastRowStart = i
+					else
+						f["Button" .. i]:SetPoint(horizontalPoint, f["Button" .. lastShown], pointTable[horizontalPoint], db.buttonGap, 0)
+					end
 				else
-					f["Button" .. i]:SetPoint("TOP", f["Button" .. lastShown], "BOTTOM", 0, -db.buttonGap)
+					if numButtons % db.buttonRowMaxCount == 0 then
+						f["Button" .. i]:SetPoint("LEFT", f["Button" .. lastRowStart], "RIGHT", (offsetSign * db.buttonGap), 0)
+						numRows = numRows + 1
+						lastRowStart = i
+					else
+						f["Button" .. i]:SetPoint(verticalPoint, f["Button" .. lastShown], pointTable[verticalPoint], 0, db.buttonGap)
+					end
 				end
 			end
 			lastShown = i
-			resizeCount = resizeCount + 1
+			numButtons = numButtons + 1
 		else
 			showButtons[i] = false
 			f["Button" .. i]:Hide()
 		end
 	end
 	if db.layoutOrientation then
-		f:SetSize(resizeCount * db.buttonSize + (resizeCount - 1) * db.buttonGap, db.buttonSize)
+		if numRows == 1 then
+			f:SetSize(numButtons * db.buttonSize + (numButtons - 1) * math.abs(db.buttonGap), db.buttonSize)
+		else
+			f:SetSize(db.buttonRowMaxCount * db.buttonSize + (db.buttonRowMaxCount - 1) * math.abs(db.buttonGap), numRows * db.buttonSize + (numRows - 1) * math.abs(db.buttonGap))
+		end
 	else
-		f:SetSize(db.buttonSize, resizeCount * db.buttonSize + (resizeCount - 1) * db.buttonGap)
+		if numRows == 1 then
+			f:SetSize(db.buttonSize, numButtons * db.buttonSize + (numButtons - 1) * math.abs(db.buttonGap))
+		else
+			f:SetSize(numRows * db.buttonSize + (numRows - 1) * math.abs(db.buttonGap), db.buttonRowMaxCount * db.buttonSize + (db.buttonRowMaxCount - 1) * math.abs(db.buttonGap))
+		end
 	end
 end
 
@@ -480,10 +515,10 @@ local options = {
 			order = 130,
 			type = "range",
 			name = "Button Gap Size",
-			desc = "Size of the gap between invidual buttons.",
+			desc = "Size of the gap between invidual buttons. Use negative values for reverse order of buttons.",
 			width = "double",
-			min = -128,
-			max = 64,
+			min = -32,
+			max = 32,
 			step = 1,
 		},
 		skinElvUI = {
@@ -500,6 +535,16 @@ local options = {
 					ReloadUI()
 				end
 			end,
+		},
+		buttonRowMaxCount = {
+			order = 150,
+			type = "range",
+			name = "Buttons In Single Row/Column",
+			desc = "The maximum number of buttons in a single row/column before starting a new one.",
+			width = "double",
+			min = 2,
+			max = numMaxPortals,
+			step = 1,
 		},
 		runeHeader = {
 			order = 200,
