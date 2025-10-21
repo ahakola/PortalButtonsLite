@@ -216,7 +216,7 @@ elseif WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC then -- 19
 	numMaxPortals = 9
 end
 
-local f = CreateFrame("Frame", "PortalButtonsLiteFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
+local f = CreateFrame("Frame", "PortalButtonsLiteFrame", UIParent, "BackdropTemplate")
 f:SetSize(42, 42)
 f:SetPoint("CENTER")
 f:SetBackdrop({
@@ -315,12 +315,11 @@ local function _updateReagentCount()
 	if db.hideRunes or f.numButtons == 0 or numMaxPortals >= 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 		f.runeCountString:Hide()
 		return
-	else
-		f.runeCountString:Show()
 	end
 
-	RoTCount = GetItemCount(17031) or 0 -- 17031 - Rune of Teleportation
-	RoPCount = GetItemCount(17032) or 0 -- 17032 - Rune of Portals
+	RoTCount = C_Item.GetItemCount(17031) or 0 -- 17031 - Rune of Teleportation
+	RoPCount = C_Item.GetItemCount(17032) or 0 -- 17032 - Rune of Portals
+
 	local RoTString = WrapTextInColor(RoTCount, RoTCount > 3 and GREEN_FONT_COLOR or (RoTCount > 0 and ORANGE_FONT_COLOR or RED_FONT_COLOR))
 	local RoPString = WrapTextInColor(RoPCount, RoPCount > 3 and GREEN_FONT_COLOR or (RoPCount > 0 and ORANGE_FONT_COLOR or RED_FONT_COLOR))
 
@@ -337,12 +336,14 @@ local function _updateReagentCount()
 		BOTTOMRIGHT = db.layoutOrientation and "TOPRIGHT" or "BOTTOMLEFT",
 		TOPRIGHT = db.layoutOrientation and "BOTTOMRIGHT" or "TOPLEFT"
 	}
+
 	f.runeCountString:ClearAllPoints()
 	f.runeCountString:SetPoint(pointTable[db.runesPosition], f, db.runesPosition, 0, 0)
+	f.runeCountString:Show()
 end
 
 local function _skinButtons()
-	if not IsAddOnLoaded("ElvUI") then return end
+	if not C_AddOns.IsAddOnLoaded("ElvUI") then return end
 
 	local E = unpack(ElvUI)
 	local S = E:GetModule("Skins")
@@ -370,16 +371,15 @@ f:SetScript("OnEvent", function(self, event, ...)
 			f:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", db.frameX, db.frameY)
 		end
 
-		local _, englishClass = UnitClass("Player")
-		playerClass = englishClass
+		playerClass = UnitClassBase("Player")
 		playerFaction = UnitFactionGroup("Player")
 
 		if playerClass ~= "MAGE" then return end
-		Debug("PortalButtonsLite:", playerClass, playerFaction)
+		Debug("Enabled:", playerClass, playerFaction)
 
 		for i = 1, numMaxPortals do
-			local teleportSpellName, _, teleportIcon = GetSpellInfo(data[playerFaction].Teleports[i])
-			local portalSpellName, _, portalIcon = GetSpellInfo(data[playerFaction].Portals[i])
+			local teleportSpellName, teleportIcon = C_Spell.GetSpellName(data[playerFaction].Teleports[i]), C_Spell.GetSpellTexture(data[playerFaction].Teleports[i])
+			local portalSpellName = C_Spell.GetSpellName(data[playerFaction].Portals[i])
 
 			local btn = f["Button" .. i] or CreateFrame("Button", "PortalButtonsLiteButton" .. i, f, "SecureActionButtonTemplate, ActionButtonTemplate")
 			btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
