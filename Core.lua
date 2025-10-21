@@ -321,11 +321,13 @@ local function _updateReagentCount()
 
 	RoTCount = GetItemCount(17031) or 0 -- 17031 - Rune of Teleportation
 	RoPCount = GetItemCount(17032) or 0 -- 17032 - Rune of Portals
+	local RoTString = WrapTextInColor(RoTCount, RoTCount > 3 and GREEN_FONT_COLOR or (RoTCount > 0 and ORANGE_FONT_COLOR or RED_FONT_COLOR))
+	local RoPString = WrapTextInColor(RoPCount, RoPCount > 3 and GREEN_FONT_COLOR or (RoPCount > 0 and ORANGE_FONT_COLOR or RED_FONT_COLOR))
 
 	if db.runesLineBreak then
-		f.runeCountString:SetFormattedText("|cff%s%d|r\n|cff%s%d|r", RoTCount > 3 and "20ff20" or RoTCount > 0 and "ff7f3f" or "ff0000", RoTCount, RoPCount > 3 and "20ff20" or RoPCount > 0 and "ff7f3f" or "ff0000", RoPCount)
+		f.runeCountString:SetFormattedText("%s\n%s", RoTString, RoPString)
 	else
-		f.runeCountString:SetFormattedText("|cff%s%d|r / |cff%s%d|r", RoTCount > 3 and "20ff20" or RoTCount > 0 and "ff7f3f" or "ff0000", RoTCount, RoPCount > 3 and "20ff20" or RoPCount > 0 and "ff7f3f" or "ff0000", RoPCount)
+		f.runeCountString:SetFormattedText("%s / %s", RoTString, RoPString)
 	end
 
 	local pointTable = {
@@ -388,17 +390,16 @@ f:SetScript("OnEvent", function(self, event, ...)
 			btn:GetNormalTexture():SetVertexColor(1, 1, 1, 0) -- Fix for Wrath Classic since it uses new DF style which can't handle :SetNormalTexture(nil)
 			btn.icon:SetTexture(teleportIcon) -- Set Icon
 			btn:SetScript("OnEnter", function(this)
-				local colorCode = (not showButtons.Teleports[i]) and "|cffff0000" or "|cffffffff"
 				if db.layoutOrientation then
 					GameTooltip:SetOwner(this, "ANCHOR_BOTTOM", 0, -10)
 				else
 					GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 10, db.buttonSize)
 				end
 				GameTooltip:ClearLines()
-				GameTooltip:AddLine("                    \n" .. iconLMB .. "  " .. colorCode .. teleportSpellName .. "|r")
-
-				colorCode = (not showButtons.Portals[i]) and "|cffff0000" or "|cffffffff"
-				GameTooltip:AddLine("                    \n" .. iconRMB .. "  " .. colorCode .. portalSpellName .. "|r")
+				GameTooltip:AddLine(string.format("%s%s\n%s%s",
+					iconLMB, WrapTextInColor(teleportSpellName or "n/a", (not showButtons.Teleports[i]) and RED_FONT_COLOR or WHITE_FONT_COLOR),
+					iconRMB, WrapTextInColor(portalSpellName or "n/a", (not showButtons.Portals[i]) and RED_FONT_COLOR or WHITE_FONT_COLOR)
+				))
 				GameTooltip:Show()
 			end)
 			btn:SetScript("OnLeave", function(this)
@@ -447,10 +448,10 @@ SlashCmdList["PORTALBUTTONSLITE"] = function(text)
 
 	moverVisible = not moverVisible
 	f:SetMovable(moverVisible)
-	f:RegisterForDrag(moverVisible and "LeftButton" or nil)
+	f:RegisterForDrag("LeftButton")
 
 	if moverVisible then
-		Print("Moving |cff20ff20enabled|r!")
+		Print(string.format("Moving %s!", WrapTextInColor("enabled", GREEN_FONT_COLOR)))
 
 		for i = 1, numMaxPortals do
 			f["Button" .. i]:Hide()
@@ -458,7 +459,7 @@ SlashCmdList["PORTALBUTTONSLITE"] = function(text)
 		f:SetBackdropColor(0, 0, 0, .5)
 		f:SetBackdropBorderColor(.88, .88, .88)
 	else
-		Print("New position saved and moving |cffff0000disabled|r!")
+		Print(string.format("New position saved and moving %s!", WrapTextInColor("disabled", RED_FONT_COLOR)))
 
 		for i = 1, numMaxPortals do
 			if showButtons[i] then
@@ -483,7 +484,7 @@ local options = {
 	args = {
 		movable = {
 			order = 0,
-			name = string.format("To move the buttons, use slashcommand %s to enable/disable the mover frame.", "|cffffd200" .. SLASH_PORTALBUTTONSLITE1 .. "|r"), -- %s = Slashcommand
+			name = string.format("To move the buttons, use slashcommand %s to enable/disable the mover frame.", WrapTextInColor(SLASH_PORTALBUTTONSLITE1, NORMAL_FONT_COLOR)), -- %s = Slashcommand
 			type = "description",
 			fontSize = "medium",
 		},
@@ -525,15 +526,15 @@ local options = {
 		skinElvUI = {
 			order = 140,
 			type = "toggle",
-			name = "Skin with ElvUI |cffff0000*NB!*|r",
-			desc = "Skin buttons in ElvUI's style.\n|cffff0000NB: Disabling this setting causes UI to reload!|r",
+			name = string.format("Skin with ElvUI %s", WrapTextInColor("*NB!*", RED_FONT_COLOR)),
+			desc = string.format("Skin buttons in ElvUI's style.\n%s", WrapTextInColor("NB: Disabling this setting causes UI to reload!", RED_FONT_COLOR)),
 			set = function(info, value)
 				db[ info[#info] ] = value
 
 				if value then
 					_skinButtons()
 				else
-					ReloadUI()
+					C_UI.Reload()
 				end
 			end,
 		},
@@ -617,13 +618,13 @@ for i = 1, numMaxPortals do
 		order = 300 + i,
 		type = "toggle",
 		name = data.Alliance.Names[i],
-		desc = string.format("Enable/Disable button for %s teleport and portal", "|cffffd200" .. data.Alliance.Names[i] .. "|r") -- %s name of the Teleport target
+		desc = string.format("Enable/Disable button for %s teleport and portal", WrapTextInColor(data.Alliance.Names[i], NORMAL_FONT_COLOR)) -- %s name of the Teleport target
 	}
 	options.args.Horde.args[data.Horde.Names[i]] = {
 		order = 350 + i,
 		type = "toggle",
 		name = data.Horde.Names[i],
-		desc = string.format("Enable/Disable button for %s teleport and portal", "|cffffd200" .. data.Horde.Names[i] .. "|r") -- %s name of the Teleport target
+		desc = string.format("Enable/Disable button for %s teleport and portal", WrapTextInColor(data.Horde.Names[i], NORMAL_FONT_COLOR)) -- %s name of the Teleport target
 	}
 end
 
