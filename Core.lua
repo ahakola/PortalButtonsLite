@@ -33,8 +33,8 @@ end
 
 local db, playerClass, playerFaction, numMaxPortals
 local RoTCount, RoPCount = 0, 0
-local iconLMB = "|TInterface\\HELPFRAME\\NewPlayerExperienceParts:26:18:0:0:1024:512:988:1006:70:96|t"
-local iconRMB = "|TInterface\\HELPFRAME\\NewPlayerExperienceParts:26:18:0:0:1024:512:988:1006:136:162|t"
+local iconLMB = CreateAtlasMarkup("NPE_LeftClick", 18, 18) --"|TInterface\\HELPFRAME\\NewPlayerExperienceParts:26:18:0:0:1024:512:988:1006:70:96|t"
+local iconRMB = CreateAtlasMarkup("NPE_RightClick", 18, 18) -- "|TInterface\\HELPFRAME\\NewPlayerExperienceParts:26:18:0:0:1024:512:988:1006:136:162|t"
 local defaults = {
 	profile = {
 		buttonSize = 32,
