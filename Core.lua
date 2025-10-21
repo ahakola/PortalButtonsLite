@@ -437,7 +437,10 @@ f:SetScript("OnEvent", function(self, event, ...)
 
 		self:RegisterEvent("LEARNED_SPELL_IN_TAB")
 		--self:RegisterEvent("BAG_UPDATE")
-		self:RegisterEvent("BAG_UPDATE_DELAYED")
+		if numMaxPortals < 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
+			--self:RegisterEvent("BAG_UPDATE")
+			self:RegisterEvent("BAG_UPDATE_DELAYED")
+		end
 
 	elseif event == "LEARNED_SPELL_IN_TAB" then
 		local spellId, skillInfoIndex, isGuildPerkSpell = ...
