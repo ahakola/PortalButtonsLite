@@ -418,6 +418,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 
 			local btn = f["Button" .. i] or CreateFrame("Button", "PortalButtonsLiteButton" .. i, f, "SecureActionButtonTemplate, ActionButtonTemplate")
 			btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+			btn:RegisterForClicks("AnyUp", "AnyDown")
 			btn:SetAttribute("type", "spell")
 			btn:SetAttribute("spell1", teleportSpellName)
 			btn:SetAttribute("spell2", portalSpellName)
