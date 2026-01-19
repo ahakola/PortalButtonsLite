@@ -416,15 +416,25 @@ f:SetScript("OnEvent", function(self, event, ...)
 			local teleportSpellName, teleportIcon = C_Spell.GetSpellName(data[playerFaction].Teleports[i]), C_Spell.GetSpellTexture(data[playerFaction].Teleports[i])
 			local portalSpellName = C_Spell.GetSpellName(data[playerFaction].Portals[i])
 
-			local btn = f["Button" .. i] or CreateFrame("Button", "PortalButtonsLiteButton" .. i, f, "SecureActionButtonTemplate, ActionButtonTemplate")
-			btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+			-- Get Button
+			local btn = f["Button" .. i] or CreateFrame("Button", "PortalButtonsLiteButton" .. i, f, "SecureActionButtonTemplate")
+			if not btn.icon then
+				local tex = btn:CreateTexture("SpellIcon", "BACKGROUND")
+				tex:SetAllPoints(btn)
+				btn.icon = tex
+			end
+
+			-- Set Textures
+			btn.icon:SetTexture(teleportIcon) -- Set Spell Icon
+			btn:SetNormalAtlas("UI-HUD-ActionBar-IconFrame", "ADD") -- Set small border around the icon to make it look neat
+			btn:SetHighlightAtlas("UI-HUD-ActionBar-IconFrame-Mouseover", "ADD") -- Set highlight when mouse is over the button
+			btn:SetPushedAtlas("UI-HUD-ActionBar-IconFrame-Down", "ADD") -- Set bigger highlight when the button is pressed
+
+			-- Set up Secure Actions and Tooltips
 			btn:RegisterForClicks("AnyUp", "AnyDown")
 			btn:SetAttribute("type", "spell")
 			btn:SetAttribute("spell1", teleportSpellName)
 			btn:SetAttribute("spell2", portalSpellName)
-			btn:SetNormalTexture(130871) -- Strip surrounding bordertexture - 130871 = Interface/Buttons/WHITE8X8
-			btn:GetNormalTexture():SetVertexColor(1, 1, 1, 0) -- Fix for Wrath Classic since it uses new DF style which can't handle :SetNormalTexture(nil)
-			btn.icon:SetTexture(teleportIcon) -- Set Icon
 			btn:SetScript("OnEnter", function(this)
 				if db.layoutOrientation then
 					GameTooltip:SetOwner(this, "ANCHOR_BOTTOM", 0, -10)
