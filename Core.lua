@@ -461,8 +461,11 @@ f:SetScript("OnEvent", function(self, event, ...)
 			_skinButtons()
 		end
 
-		self:RegisterEvent("LEARNED_SPELL_IN_TAB") -- Classic
-		--self:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE") -- TWW-> (Retail, might come to Classic later?)
+		if numMaxPortals < 6 then -- Era
+			self:RegisterEvent("LEARNED_SPELL_IN_TAB")
+		else -- Classic ->
+			self:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE")
+		end
 		if numMaxPortals < 9 then -- Starting with MoP (Classic), you no longer need reagents for teleport or portal spells
 			--self:RegisterEvent("BAG_UPDATE")
 			self:RegisterEvent("BAG_UPDATE_DELAYED")
