@@ -5,6 +5,17 @@
 ## Notes: An addon where you have custom row of buttons to hold teleport/portal spells.
 ## RequiredDeps:
 ## SavedVariables: PortalButtonsLiteDB
+## Category: Action Bars
+## Category-deDE: Aktionsleisten
+## Category-esES: Barras de acción
+## Category-esMX: Barras de acción
+## Category-frFR: Barres d’action
+## Category-itIT: Barre delle azioni
+## Category-koKR: 액션 바
+## Category-ptBR: Barras de ação
+## Category-ruRU: Панели команд
+## Category-zhCN: 动作条
+## Category-zhTW: 快捷列
 
 #@no-lib-strip@
 Libs\LibStub\LibStub.lua
